@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PrintinginfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Printinginfo">
+    <id column="printing_id" jdbcType="INTEGER" property="printingId" />
+    <result column="contract_id" jdbcType="INTEGER" property="contractId" />
+    <result column="printing_page" jdbcType="INTEGER" property="printingPage" />
+    <result column="contract_time" jdbcType="TIMESTAMP" property="contractTime" />
+    <result column="printingContract_msg" jdbcType="VARCHAR" property="printingcontractMsg" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    printing_id, contract_id, printing_page, contract_time, printingContract_msg, user_id
+  </sql>
+  <select id="selectByExample" parameterType="com.example.demo.entity.PrintinginfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from printinginfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from printinginfo
+    where printing_id = #{printingId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from printinginfo
+    where printing_id = #{printingId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.entity.PrintinginfoExample">
+    delete from printinginfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.Printinginfo">
+    insert into printinginfo (printing_id, contract_id, printing_page, 
+      contract_time, printingContract_msg, user_id
+      )
+    values (#{printingId,jdbcType=INTEGER}, #{contractId,jdbcType=INTEGER}, #{printingPage,jdbcType=INTEGER}, 
+      #{contractTime,jdbcType=TIMESTAMP}, #{printingcontractMsg,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.Printinginfo">
+    insert into printinginfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="printingId != null">
+        printing_id,
+      </if>
+      <if test="contractId != null">
+        contract_id,
+      </if>
+      <if test="printingPage != null">
+        printing_page,
+      </if>
+      <if test="contractTime != null">
+        contract_time,
+      </if>
+      <if test="printingcontractMsg != null">
+        printingContract_msg,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="printingId != null">
+        #{printingId,jdbcType=INTEGER},
+      </if>
+      <if test="contractId != null">
+        #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="printingPage != null">
+        #{printingPage,jdbcType=INTEGER},
+      </if>
+      <if test="contractTime != null">
+        #{contractTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printingcontractMsg != null">
+        #{printingcontractMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.entity.PrintinginfoExample" resultType="java.lang.Long">
+    select count(*) from printinginfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update printinginfo
+    <set>
+      <if test="record.printingId != null">
+        printing_id = #{record.printingId,jdbcType=INTEGER},
+      </if>
+      <if test="record.contractId != null">
+        contract_id = #{record.contractId,jdbcType=INTEGER},
+      </if>
+      <if test="record.printingPage != null">
+        printing_page = #{record.printingPage,jdbcType=INTEGER},
+      </if>
+      <if test="record.contractTime != null">
+        contract_time = #{record.contractTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.printingcontractMsg != null">
+        printingContract_msg = #{record.printingcontractMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update printinginfo
+    set printing_id = #{record.printingId,jdbcType=INTEGER},
+      contract_id = #{record.contractId,jdbcType=INTEGER},
+      printing_page = #{record.printingPage,jdbcType=INTEGER},
+      contract_time = #{record.contractTime,jdbcType=TIMESTAMP},
+      printingContract_msg = #{record.printingcontractMsg,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Printinginfo">
+    update printinginfo
+    <set>
+      <if test="contractId != null">
+        contract_id = #{contractId,jdbcType=INTEGER},
+      </if>
+      <if test="printingPage != null">
+        printing_page = #{printingPage,jdbcType=INTEGER},
+      </if>
+      <if test="contractTime != null">
+        contract_time = #{contractTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="printingcontractMsg != null">
+        printingContract_msg = #{printingcontractMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where printing_id = #{printingId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Printinginfo">
+    update printinginfo
+    set contract_id = #{contractId,jdbcType=INTEGER},
+      printing_page = #{printingPage,jdbcType=INTEGER},
+      contract_time = #{contractTime,jdbcType=TIMESTAMP},
+      printingContract_msg = #{printingcontractMsg,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER}
+    where printing_id = #{printingId,jdbcType=INTEGER}
+  </update>
+</mapper>
